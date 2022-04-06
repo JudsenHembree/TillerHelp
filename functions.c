@@ -12,10 +12,10 @@
  * This function dynamically allocates memory for the int** mtx inside matrix using 
  * rows and cols
  */
-void allocateMemory(MATRIX matrix){
-	matrix.mtx = (int**)malloc(sizeof(int*) * matrix.rows);
-	for(int i = 0; i < matrix.rows; i++){
-		matrix.mtx[i] = (int*)malloc(sizeof(int) * matrix.cols);
+void allocateMemory(MATRIX* matrix){
+	matrix->mtx = (int**)malloc(sizeof(int*) * matrix->rows);
+	for(int i = 0; i < matrix->rows; i++){
+		matrix->mtx[i] = (int*)malloc(sizeof(int) * matrix->cols);
 	}
 }
 
@@ -38,25 +38,21 @@ void deallocateMemory(MATRIX matrix){
  * This function opens a file with the name stored in input and fills out the needed data for 
  * matrix to allocate its memory and fill its mtx 2d array  
  */
-void readInput(char* input, MATRIX matrix){
+void readInput(char* input, MATRIX* matrix){
 	int rows, cols;
-	char trash;
 	FILE* dev = fopen(input, "r");
 	fscanf(dev, "%d", &rows);
 	fscanf(dev, "%d", &cols);
-	matrix.rows = rows;
-	matrix.cols = cols;
+	matrix->rows = rows;
+	matrix->cols = cols;
 	allocateMemory(matrix);
-	fprintf(stderr, "%d %d\n", matrix.rows, matrix.cols);
-	for(int i = 0; i < matrix.rows; i++){
-		for(int j = 0; j < matrix.cols; j++){
+	for(int i = 0; i < matrix->rows; i++){
+		for(int j = 0; j < matrix->cols; j++){
 			fprintf(stderr, "here\n");
-			fscanf(dev, "%d ", &(matrix.mtx[i][j]));
-			fprintf(stderr, "%d ", matrix.mtx[i][j]);
+			fscanf(dev, "%d ", &matrix->mtx[i][j]);
+			fprintf(stderr, "%d ", matrix->mtx[i][j]);
 			fprintf(stderr, "here2\n");
 		}
-		//trash catches newline character at end of each row
-		trash = fgetc(dev);
 	}
 	fclose(dev);
 } 
@@ -151,6 +147,7 @@ int** makeChange(MATRIX matrix, int offset){
 		}
 		return output;
 	}
+	return NULL;
 }
 
 //Calls other functions to apply filter
@@ -160,7 +157,7 @@ void applyFilter(char* target, MATRIX matrix){
 	MATRIX newMatrix;
 	newMatrix.rows = matrix.rows;
 	newMatrix.cols = matrix.cols;
-	allocateMemory(newMatrix);
+	allocateMemory(&newMatrix);
 	newMatrix.filterWidth = matrix.filterWidth;
 	newMatrix.mtx = makeChange(matrix, borderSpace);
 	printOutput(target, newMatrix);

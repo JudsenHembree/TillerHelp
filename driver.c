@@ -24,7 +24,8 @@ int main(int argc, char* argv[]){
 	}
  
 	MATRIX matrix1;		
-	readInput(argv[1], matrix1);
+	readInput(argv[1], &matrix1);
+	fprintf(stderr, "%d %d\n", matrix1.rows, matrix1.cols);
 	setFilter(matrix1);
 	applyFilter(argv[1], matrix1);
 	deallocateMemory(matrix1);

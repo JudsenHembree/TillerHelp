@@ -18,9 +18,9 @@ typedef struct {
 }MATRIX;
 
 
-void allocateMemory(MATRIX);
+void allocateMemory(MATRIX*);
 void deallocateMemory(MATRIX);
-void readInput(char*, MATRIX);
+void readInput(char*, MATRIX*);
 void printOutput(char*, MATRIX);
 int setBorderSpace(int);
 int checkRange(int);
