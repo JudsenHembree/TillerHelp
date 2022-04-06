@@ -19,6 +19,7 @@ typedef struct {
 
 
 void allocateMemory(MATRIX*);
+void allocateFilter(MATRIX*);
 void deallocateMemory(MATRIX);
 void readInput(char*, MATRIX*);
 void printOutput(char*, MATRIX);
@@ -28,6 +29,6 @@ int checkChange(MATRIX);
 int calculateSpot(MATRIX);
 int** makeChange(MATRIX, int);
 void applyFilter(char*, MATRIX);
-void setFilter(MATRIX);
+void setFilter(MATRIX*);
 
 #endif

@@ -163,43 +163,51 @@ void applyFilter(char* target, MATRIX matrix){
 	printOutput(target, newMatrix);
 }
 
+void allocateFilter(MATRIX* matrix){
+	matrix->filter = (int**)malloc(sizeof(int*) * matrix->filterWidth);
+	for(int i = 0; i < matrix->filterWidth; i++){
+	matrix->filter[i] = (int*)malloc(sizeof(int) * matrix->filterWidth);
+	}
+}
+
 //
-void setFilter(MATRIX matrix){
-	char temp[] = "";
+void setFilter(MATRIX* matrix){
+	char temp[3] = "";
 	fprintf(stdout, "Please enter the filter you would like to use 3x3 or 5x5:\n");
-   fscanf(stdin, "%s", temp);
-   if(strcmp(temp, "3x3") == 0){
-      matrix.filterWidth = 3;
+   	fscanf(stdin, "%s", temp);
+   	if(strcmp(temp, "3x3") == 0){
+      matrix->filterWidth = 3;
+	  allocateFilter(matrix);
 
       for(int i = 0; i < 3; i++){
          if(i == 1){
-           matrix.filter[i][0] = -1;
-           matrix.filter[i][1] = 5;
-           matrix.filter[i][2] = -1;
+           matrix->filter[i][0] = -1;
+           matrix->filter[i][1] = 5;
+           matrix->filter[i][2] = -1;
          }
          else{
-            matrix.filter[i][0] = 0;
-            matrix.filter[i][1] = -1;
-            matrix.filter[i][2] = 0;
+            matrix->filter[i][0] = 0;
+            matrix->filter[i][1] = -1;
+            matrix->filter[i][2] = 0;
          }
       }
    }
    else if(strcmp(temp, "5x5") == 0){
-      matrix.filterWidth = 5;
+      matrix->filterWidth = 5;
       for(int i = 0; i < 5; i++){
          if(i == 2){
-            matrix.filter[i][0] = -1;
-            matrix.filter[i][1] = -1;
-            matrix.filter[i][2] = 9;
-            matrix.filter[i][3] = -1;
-            matrix.filter[i][4] = -1;
+            matrix->filter[i][0] = -1;
+            matrix->filter[i][1] = -1;
+            matrix->filter[i][2] = 9;
+            matrix->filter[i][3] = -1;
+            matrix->filter[i][4] = -1;
          }
          else{
-            matrix.filter[i][0] = 0;
-            matrix.filter[i][1] = 0;
-            matrix.filter[i][2] = -1;
-            matrix.filter[i][3] = 0;
-            matrix.filter[i][4] = 0;
+            matrix->filter[i][0] = 0;
+            matrix->filter[i][1] = 0;
+            matrix->filter[i][2] = -1;
+            matrix->filter[i][3] = 0;
+            matrix->filter[i][4] = 0;
          }
       }
    }
